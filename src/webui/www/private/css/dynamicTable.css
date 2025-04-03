@@ -26,8 +26,66 @@
     color: var(--color-text-white);
 }
 
-#transferList tr:hover {
-    cursor: pointer;
+#transferList .stateIcon,
+#torrentCreatorContentView .stateIcon {
+    background: left center / contain no-repeat;
+    margin-left: 3px;
+    padding-left: 1.65em;
+
+    &.stateIconColumn {
+        height: 14px;
+        margin: auto;
+        padding-left: 0;
+        width: 14px;
+    }
+
+    &.stateDownloading {
+        background-image: url("../images/downloading.svg");
+    }
+
+    &.stateUploading {
+        background-image: url("../images/upload.svg");
+    }
+
+    &.stateStalledUP {
+        background-image: url("../images/stalledUP.svg");
+    }
+
+    &.stateStalledDL {
+        background-image: url("../images/stalledDL.svg");
+    }
+
+    &.stateStoppedDL {
+        background-image: url("../images/stopped.svg");
+    }
+
+    &.stateStoppedUP {
+        background-image: url("../images/checked-completed.svg");
+    }
+
+    &.stateQueued {
+        background-image: url("../images/queued.svg");
+    }
+
+    &.stateChecking {
+        background-image: url("../images/force-recheck.svg");
+    }
+
+    &.stateMoving {
+        background-image: url("../images/set-location.svg");
+    }
+
+    &.stateError {
+        background-image: url("../images/error.svg");
+    }
+
+    &.stateRunning {
+        background-image: url("../images/torrent-start.svg");
+    }
+
+    &.stateUnknown {
+        background-image: none;
+    }
 }
 
 #transferList img.stateIcon {

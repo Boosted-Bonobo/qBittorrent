@@ -32,6 +32,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStringList>
+#include <QUrl>
 
 #include "base/global.h"
 #include "base/bittorrent/torrentcreationmanager.h"
@@ -88,6 +89,17 @@ namespace
     }
 #endif
 
+    QStringList parseUrls(const QString &urlsParam)
+    {
+        // Empty lines are preserved because they indicate new tracker tier and will be ignored in url seeds.
+        const QStringList encodedUrls = urlsParam.split(u'|');
+        QStringList urls;
+        urls.reserve(encodedUrls.size());
+        for (const QString &urlStr : encodedUrls)
+            urls << QUrl::fromPercentEncoding(urlStr.toLatin1());
+        return urls;
+    }
+
     QString taskStatusString(const std::shared_ptr<BitTorrent::TorrentCreationTask> task)
     {
         if (task->isFailed())
@@ -129,9 +141,9 @@ void TorrentCreatorController::addTaskAction()
         .sourcePath = Path(params()[KEY_SOURCE_PATH]),
         .torrentFilePath = Path(params()[KEY_TORRENT_FILE_PATH]),
         .comment = params()[KEY_COMMENT],
-        .source = params()[KEY_COMMENT],
-        .trackers = params()[KEY_TRACKERS].split(u'|'),
-        .urlSeeds = params()[KEY_URL_SEEDS].split(u'|')
+        .source = params()[KEY_SOURCE],
+        .trackers = parseUrls(params()[KEY_TRACKERS]),
+        .urlSeeds = parseUrls(params()[KEY_URL_SEEDS])
     };
 
     bool const startSeeding = parseBool(params()[u"startSeeding"_s]).value_or(createTorrentParams.torrentFilePath.isEmpty());
