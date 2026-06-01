@@ -641,7 +641,9 @@ namespace
 
 bool upgrade()
 {
-    if (CachedSettingValue<int> version {MIGRATION_VERSION_KEY, 0}; version != MIGRATION_VERSION)
+    CachedSettingValue<int> version {MIGRATION_VERSION_KEY, 0};
+
+    if (version != MIGRATION_VERSION)
     {
         if (version < 1)
         {
@@ -686,7 +688,6 @@ bool upgrade()
         {
             upgradeTrayIconStyleSettings2();
             migrateSMTPEncryptionSetting();
-            setResolvePeerCountriesSetting();
         }
 
         if (version < 11)
