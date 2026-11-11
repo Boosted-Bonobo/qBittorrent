@@ -1415,7 +1415,7 @@ void Preferences::recheckTorrentsOnCompletion(const bool recheck)
 
 bool Preferences::resolvePeerCountries() const
 {
-    return value(u"Preferences/Connection/ResolvePeerCountries"_s, false);
+    return value(u"Preferences/Connection/ResolvePeerCountries"_s, true);
 }
 
 void Preferences::resolvePeerCountries(const bool resolve)
@@ -2226,6 +2226,16 @@ void Preferences::setAddNewTorrentDialogAttached(const bool attached)
         return;
 
     setValue(u"AddNewTorrentDialog/Attached"_s, attached);
+}
+
+bool Preferences::getShadowBan() const
+{
+    return value(u"Preferences/Advanced/ShadowBan"_s, false);
+}
+
+void Preferences::setShadowBan(const bool checked)
+{
+    setValue(u"Preferences/Advanced/ShadowBan"_s, checked);
 }
 
 void Preferences::apply()
